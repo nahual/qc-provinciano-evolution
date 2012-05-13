@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Especificaciones de Provinciano</title>
+    <link rel="stylesheet" href="css/specs.css" />
+</head>
+<body>
+
+<h1>Especificaciones Provinciano Evolution</h1>
+
+<table id="head">
+    <tr>
+        <th>Caso de uso</th>
+        <td>Provinciano Evolution</td>
+    </tr>
+    <tr>
+        <th>Objetivo</th>
+        <td>Obtener información sobre las distintas provincias argentinas y poder exportarla</td>
+    </tr>
+    <tr>
+        <th>Precondiciones</th>
+        <td>No hay precondiciones</td>
+    </tr>
+</table>
+
+<br/>
+
+<table id="specification">
+    <tdead>
+        <th>Curso normal</th>
+        <th>Alternativa</th>
+    </tdead>
+    <tbody>
+        <tr>
+            <td>El usuario ingresa al sistema</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                El sistema muestra la pantalla:
+                <br/>
+                <ul>
+                    <li>
+                        Títulos:
+                        <ul>
+                            <li>Provinciano</li>
+                            <li>Buscador de datos sobre Provincias de la República Argentina</li>
+                        </ul>
+                    </li>
+                    <li>Campos (filtros)
+                        <ul>
+                            <li>Región (Combo, lista de regiones argentinas + "&lt;Todas&gt;" + "&lt;Ninguna&gt;"), orden: alfabético creciente, con "&lt;Todas&gt;" y "&lt;Ninguna&gt;" en los primeros lugares). Valor por defecto: &lt;Todas&gt;</li>
+                            <li>Nombre (Texto). Valor por defecto: Vacío.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>El usuario selecciona una región y/o escribe un nombre de ciudad</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>El sistema muestra una grilla que contiene los registros que coincidan con el criterio de búsqueda seleccionado.
+                <ul>
+                    <li>Columnas:
+                        <ul>
+                            <li>Región: Región a la que corresponde la provincia</li>
+                            <li>Nombre: Nombre de la provincia</li>
+                            <li>Capital: Capital de la provincia</li>
+                            <li>Habitantes: Cantidad de habitantes de la provincia</li>
+                            <li>Km<sup>2</sup>: Superficie de la provincia</li>
+                        </ul>
+                    </li>
+                    <li>Por defecto los resultados aparecen en orden alfabético creciente según nombre de la provincia</li>
+                    <li>Se visualizan todas las provincias que:
+                        <ul>
+                            <li>Corresponden a la región seleccionada</li>
+                            <li>En su nombre contienen la subcadena especificada (en el campo Nombre)</li>
+                        </ul>
+                    </li>
+                    <li>Se encuentran disponibles opciones para ordenar por cualquiera de las columnas</li>
+                        <ul>
+                            <li>Si se ordena por alguna columna, la flecha que corresponde al ordenamiento elegido aparece resaltada en color rojo</li>
+                        </ul>
+                    <li>Se encuentra disponible una opción para exportar la información</li>
+                    <li>La información debe ser equivalente a la disponible en la entrada “Provincias de Argentina” de wikipedia  (http://es.wikipedia.org/wiki/Provincias_de_Argentina)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Si ninguno de los valores coincide con el criterio de búsqueda, en la grilla se visualiza el mensaje  “No hay provincias que coincidan con lo buscado”</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>El usuario selecciona la opción “Exportar” para generar un reporte con la información que se viusaliza en la pantalla</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>El sistema muestra una ventana con una lista de opciones de seleccion que corresponde al conjunto de columnas de la grilla, las opciones de exportar a html o cvs y una opción para cancelar.</td>
+            <td>Si no hay provincias que coincidan con lo buscado, se muestra un diálogo para que el usuario confirme que de todas maneras quiere exportar sólo los nombres de las columnas. Las opciones son:
+                <ul>
+                    <li>Ok: se sigue el flujo normal</li>
+                    <li>Cancel: se cierra el diálogo y se vuelve a la pantalla principal</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>El usuario:
+                <ul>
+                    <li>Selecciona las columnas que desea que se visualicen en el reporte</li>
+                    <li>Selecciona el formato en el que el sistema debe generar el reporte</li>
+                </ul>
+            </td>
+            <td>El usuario:
+                <ul>
+                    <li>Hace click en "Cancelar" o</li>
+                    <li>Hace click en la cruz de la esquina superior derecha o </li>
+                    <li>Presiona la tecla "esc"</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>El sistema genera un reporte (en el formato de archivo seleccionado) con la información presente en la pantalla, presentando sólo los datos correspondientes a las columnas seleccionadas.<br/>Nombre del archivo: provinciano.html o provinciano.csv.</td>
+            <td>Se cierra la ventana de selección de columnas</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Provinciano Evolution</title>
+<link rel="stylesheet" href="css/provinciano.css" />
+<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.8.18.custom.css" />
+<script type="text/javascript" src="js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="js/table_sorter.js"></script>
+<script type="text/javascript" src="js/provinciano.js"></script>
+<script type="text/javascript" src="js/provincias.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript">
+    function open_export_dialog() {
+        if ($("td.sortable", "#data tbody").length == 0) {
+            if (!confirm("No hay datos para exportar, ¿Desea exportar los nombres de las columnas?")) { 
+                return false;
+            }
+        }
+        $("#formContainer input[type=checkbox]").each(function() {
+            $(this).attr("checked", true);
+        });
+
+        $("#dialog").dialog("open");
+        return false;
+    }
+    $(document).ready(function() {
+        load_regions();
+        load_data(provincias);
+        $("#input").keyup(function(event){
+            if (event.keyCode != 13) {
+                load_data(search_data());
+            }
+        });
+        $("#filters").submit(function() {
+            load_data(search_data());
+            return false;
+        });
+        
+        $(".js-downloader").click(function() {
+            var columns = $("input[type=checkbox]", "#dialog")
+            columns = columns.filter(function() { return this.checked});
+            columns = columns.map(function() { return this.value});
+            $(this).attr("href", get_content($(this).attr("type"), columns));
+            $(this).attr("target", "_blank");
+            $("#dialog").dialog("close");
+        });
+
+        $('#dialog').dialog({
+            autoOpen : false,
+            modal : true,
+            draggable: false,
+            closeOnEscape: false,
+            buttons: {
+                     "Cancelar" : function() {
+                            $(this).dialog("close");
+                     }
+                }
+        });
+        var version = getURLParameter('v');
+        if (version) {
+            $.ajax({
+                url: 'js/bugs' + version + '.js',
+                dataType: "script",
+                async: false
+            });
+        }
+    });
+</script>
+</head>
+<body>
+
+<h1>Provinciano Evolution</h1>
+<p>Buscador de datos sobre Provincias de la República Argentina</p>
+
+<div id="filter-wrapper">
+    <form id="filters" action="">
+         <label for="region">Regi&oacute;n</label>
+            <select id="region" onchange="load_data(search_data())"></select>
+        <label for="input">Nombre</label>
+        <input id="input" class="input" type="text" />
+    </form>
+</div>
+<br/>
+<div id="data-wrapper">
+    <div id="export">
+        <a href="#" onclick="return open_export_dialog()">Exportar</a>
+        <div id="dialog">
+            <form>
+                <div id="formContainer">
+                    <ul>
+                        <li>Regi&oacute;n <input type="checkbox" value="region"/></li>
+                        <li>Nombre <input type="checkbox" value="name"/></li>
+                        <li>Capital <input type="checkbox" value="capital"/></li>
+                        <li>Habitantes <input type="checkbox" value="inhabitants"/></li>
+                        <li>Km<sup>2</sup> <input type="checkbox" value="area"/></li>
+                    </ul>
+                    <p>
+                        <a href="#" class="js-downloader" type="html">html</a>
+                        <a href="#" class="js-downloader" type="csv">csv</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <table id="data">
+        <thead key_columns='region,name'>
+            <tr>
+                <th class='sortable' name='region' type='string'><span class="column-title">Regi&oacute;n</span></th>
+                <th class='sortable' name='name' type='string'><span class="column-title">Nombre</span></th>
+                <th class='sortable' name='capital' type='string'><span class="column-title">Capital</span></th>
+                <th class='sortable' name='inhabitants' type='int'><span class="column-title">Habitantes</span></th>
+                <th class='sortable' name='area' type='int'><span class="column-title">Km<sup>2</sup></span></th>
+            </tr>
+        </thead>
+        <tbody>
+		</tbody>
+    </table>
+</div>
+</body>
+</html>
